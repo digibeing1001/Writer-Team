@@ -223,6 +223,37 @@
 
 ---
 
+## 十、QA 框架承载（LLM 评估 / 风格指纹 / 防回归）
+
+> 本节为 v2.2 新增，对应 [qa-framework.md](qa-framework.md) v1.1 的 13 个方法论吸收。
+> 这些工具均为 Python/PyTorch/Node 项目，与团队 Markdown-only 架构不直接匹配，登记为「方法论参考，按需下载」。
+
+### DeepEval（方法论参考，按需下载）
+- **仓库**：https://github.com/confident-ai/deepeval （约 7k+ Star）
+- **用途**：pytest 风格 LLM 评估框架，14+ 内置指标（faithfulness / answer relevancy / context relevancy / hallucination 等），支持 CI/CD 集成
+- **承载角色**：审查员（QA 框架第一层方法论参考）
+- **对应吸收**：吸收 1 LLM-as-judge 偏见消除 / 吸收 2 FActScore 原子化核查 / 吸收 4 Evals 可演进
+- **集成方式**：方法论参考——审查员四层金字塔审查可借鉴其指标设计思想。如团队后续引入代码工程化，可下载集成做自动化评估
+- **边界**：Python 项目，需 pytest 环境；当前团队 Markdown-only 架构不直接下载
+
+### StyleLLM（方法论参考，按需下载）
+- **仓库**：https://github.com/mbzuaiacademic/StyleLLM （约 1k+ Star）
+- **用途**：中文文风学习与迁移，把"风格"从主观感受量化为可计算的指纹（句长分布/虚词频率/标点偏好/语义模式）
+- **承载角色**：风格官（QA 框架第三层方法论参考）
+- **对应吸收**：吸收 11 风格指纹量化
+- **集成方式**：方法论参考——风格官的 9 维画像 + Voice Calibration 机械扫描清单（已在 [06-style-profile.md](../agents/06-style-profile.md) v2.0 落地）是其思想的手工落地。如需自动化指纹计算，可下载集成
+- **边界**：PyTorch 项目，需 GPU 环境；当前团队手工量化已满足需求
+
+### Promptfoo（方法论参考，按需下载）
+- **仓库**：https://github.com/promptfoo/promptfoo （约 5k+ Star）
+- **用途**：CI/CD 防 prompt 回归，改 prompt 时自动跑评估矩阵对比前后
+- **承载角色**：审查员 / 秘书（QA 框架第一层方法论参考）
+- **对应吸收**：吸收 4 Evals 可演进
+- **集成方式**：方法论参考——审查员改 prompt 时可借鉴其评估矩阵思想，防止"修了 A 味、坏了事实性"。如团队后续引入 CI/CD，可下载集成
+- **边界**：Node.js CLI 工具；当前团队无 CI/CD 流水线，登记为参考
+
+---
+
 ## 接入原则
 
 1. 外部技能按各自许可证约束使用，登记为「本地可用」不代表忽略原作者许可证
@@ -253,6 +284,9 @@
 | **P2 可选参考** | fact-check、Source-Verification-Tool | 审查员/研究员 | 📚 方法论参考 | 事实核查 |
 | **P2 可选参考** | style-transfer、Chinese-Simple-Text-Classifier | 风格官 | 📚 方法论参考 | 风格迁移 |
 | **P2 可选参考** | blog-auto-publishing-tools | 排版师 | 📚 方法论参考 | 自动发布参考 |
+| **P2 可选参考** | DeepEval | 审查员 | 📚 方法论参考 | LLM 评估框架，对应 QA 框架吸收 1/2/4 |
+| **P2 可选参考** | StyleLLM | 风格官 | 📚 方法论参考 | 中文文风量化，对应 QA 框架吸收 11 |
+| **P2 可选参考** | Promptfoo | 审查员/秘书 | 📚 方法论参考 | CI/CD 防 prompt 回归，对应 QA 框架吸收 4 |
 
 **状态图例**：✅ 已下载本地 ｜ 🌐 在线版可用 ｜ 🔌 API 接入 ｜ 📚 方法论参考 ｜ ⚠️ 不可访问
 
@@ -284,4 +318,4 @@ tools/
 
 ---
 
-当前版本：v2.1（含 17+ 项外部技能，1 项已下载本地，9 项方法论提炼完成，按承载角色分组）
+当前版本：v2.2（含 20+ 项外部技能，1 项已下载本地，9 项方法论提炼完成，新增 §十 QA 框架承载章节登记 DeepEval/StyleLLM/Promptfoo 三项方法论参考，对应 qa-framework.md v1.1 的 13 个方法论吸收）
